@@ -11,3 +11,15 @@
 .animate-slideIn {
   animation: slideIn 0.4s ease-out;
 }
+
+body {
+  background: linear-gradient(270deg, #ff7e5f, #feb47b);
+  background-size: 800% 800%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
