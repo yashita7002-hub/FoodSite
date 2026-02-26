@@ -5,15 +5,27 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useEffect } from "react";
 import { SearchContext,useSearch } from "../context/context.jsx";
 import {food_items} from "../food.js" ;
+import { useSelector } from "react-redux";
 
 
 function Navbar({ onCartClick }) {
+ 
+
+
+
   const { input, setInput,cate,setCate } = useSearch();
   useEffect(()=>{
    let newList =  food_items.filter((item)=>item.food_name.includes(input) || 
    item.food_name.toLowerCase().includes(input))
    setCate(newList)
    },[input])
+
+
+
+
+    const cartItems = useSelector((store) => store.cart.items);
+
+    
   return (
     <>
     <nav className="sticky top-0 z-50 w-full bg-white shadow-md px-6 py-4">
@@ -50,7 +62,7 @@ function Navbar({ onCartClick }) {
 </button>
             
             <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              2
+            {cartItems.length}
             </span>
           </div>
         </div>

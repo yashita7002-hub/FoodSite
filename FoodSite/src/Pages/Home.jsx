@@ -5,12 +5,15 @@ import FoodItems from "../Components/FoodItems";
 import { food_items } from "../food";
 import { useSearch } from "../context/context.jsx";
 import { GiCancel } from "react-icons/gi";
+import { useSelector } from "react-redux";
 import Card from "../Components/Card.jsx";
 
 
 function Home() {
   const { input, cate, setCate } = useSearch();
   const [showCart, setShowCart] = useState(false);
+
+    const cartItems = useSelector((store) => store.cart.items);
 
   function filter(category) {
     if (category === "All") {
@@ -26,13 +29,15 @@ function Home() {
     }
   }
 
+
   return (
-    <div className="relative">
+    <div className="relative ">
 
       {/* Navbar */}
       <Navbar onCartClick={() => setShowCart(true)} />
 
       {/* Categories */}
+
       {!input && (
         <div className="flex flex-wrap justify-center gap-8 items-center mt-12 px-6">
           {Categories.map((item, index) => (
@@ -58,15 +63,18 @@ function Home() {
 
       {/* Food Items */}
       <div className="w-full flex flex-wrap justify-center gap-12 mt-12 px-6">
-        {cate.map((item) => (
+        {cate.length>1? 
+        
+        cate.map((item) => (
           <FoodItems
+            id={item.id}
             key={item.id}
             name={item.food_name}
             image={item.food_image}
             price={item.price}
             type={item.food_type}
           />
-        ))}
+        )):<div> No dish found </div>}
       </div>
 
       {/* Cart Sidebar */}
@@ -104,24 +112,23 @@ function Home() {
             </header>
 
             {/* Body */}
-            <Card />
             <div className="flex-1 overflow-y-auto p-6">
+            {cartItems.length > 0 ? (
+              <Card />
+            ) : (
               <p className="text-gray-500 text-center mt-10">
                 Your cart is empty 🍽️
               </p>
+            )}
             </div>
 
-            {/* Footer */}
-            <div className="p-6 border-t bg-gray-50">
-              <button
-                className="w-full py-3 rounded-xl 
-                bg-amber-500 text-white font-semibold 
-                transition-all duration-300 
-                hover:bg-amber-600 hover:shadow-lg active:scale-95"
-              >
-                Proceed to Checkout
-              </button>
+            
+
+            <div>
+
             </div>
+
+          
 
           </div>
         </div>
